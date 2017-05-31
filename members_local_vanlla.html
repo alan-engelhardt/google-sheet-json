@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>json persons test 3</title>
+	</head>
+
+	<body onload="getData()">
+		<h1>Persons:</h1>
+		<section></section>
+		<template>
+			<article>
+				<h2>NAME</h2>
+				<p>Email: <a>EMAIL</a></p>
+			</article>
+		</template>
+		<script>
+			let section = document.querySelector('section');
+			let template = document.querySelector('template').content;
+
+			function getData() {
+				xhr = new XMLHttpRequest();
+				xhr.open("GET", "members.json", true);
+				xhr.send();
+				xhr.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						let jsonObj = JSON.parse(this.responseText);
+						jsonObj.forEach(displayMember);
+					}
+				};
+			}
+
+			function displayMember(member){
+				let clone = template.cloneNode('true');
+				let name = member.first_name + " " + member.last_name;
+				clone.querySelector("h2").innerHTML = name;
+				clone.querySelector("a").innerHTML = member.email;
+				clone.querySelector("a").setAttribute("href", "mailto:"+member.email);
+				section.appendChild(clone);
+			}
+		</script>
+	</body>
+</html>
