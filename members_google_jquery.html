@@ -19,8 +19,8 @@
 			</article>
 		</template>
 		<script>
-			let section = document.querySelector('section');
-			let template = document.querySelector('template').content;
+			let section = $('section');
+			let template = $('template');
 
 			// Google Spreadsheet ID
 			let spreadsheetID = "1U2efzI_p5Wf1vGmIapamkutf_SanSeLgc9djXCgy6-Q";
@@ -34,8 +34,7 @@
 			});
 
 			function displayMember(){
-				console.log(this);
-				let clone = template.cloneNode('true');
+				let clone = template[0].content.cloneNode('true');
 				let name = this.gsx$firstname.$t + " " + this.gsx$lastname.$t;
 				let email = this.gsx$email.$t
 				let phone = this.gsx$phone.$t
@@ -43,7 +42,7 @@
 				clone.querySelector("a").innerHTML = email;
 				clone.querySelector("a").setAttribute("href", "mailto:"+email);
 				clone.querySelector(".phone").innerHTML = phone;
-				section.appendChild(clone);
+				section[0].appendChild(clone);
 			}
 		</script>
 	</body>
