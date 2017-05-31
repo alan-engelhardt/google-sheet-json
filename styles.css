@@ -1,0 +1,15 @@
+body{
+	font-family: sans-serif;
+}
+section{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-column-gap: .5em;
+	grid-row-gap: .5em;
+}
+article{
+	text-align: center;
+	padding: 1em;
+	background-color: #edc;
+	border-radius: 10px;
+}

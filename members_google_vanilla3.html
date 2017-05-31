@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>json google vanilla</title>
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<header><h1>Memebers</h1></header>
+		<section></section>
+		<template>
+			<article>
+				<h2>NAME</h2>
+				<p class="email">E-mail: <a>EMAIL</a></p>
+				<p>Phone: <span class="phone">PHONE</span></p>
+			</article>
+		</template>
+		<script>
+			let section = document.querySelector('section');
+			let template = document.querySelector('template').content;
+			let path = "https://spreadsheets.google.com/feeds/list/1U2efzI_p5Wf1vGmIapamkutf_SanSeLgc9djXCgy6-Q/od6/public/values?alt=json";
+
+			function loadJSON(path) {
+				let xobj = new XMLHttpRequest();
+				xobj.overrideMimeType("application/json");
+				xobj.open('GET', path, true);
+				xobj.onreadystatechange = function () {
+					if (xobj.readyState == 4 && xobj.status == "200") {
+						let rows = JSON.parse(xobj.responseText).feed.entry;
+						displayMembers(rows);
+					}
+				};
+				xobj.send(null);
+			}
+
+			function displayMembers(rows){
+				for(let i=0; i<rows.length; i++){
+					let clone = template.cloneNode('true');
+					let name = rows[i].gsx$firstname.$t + " " + rows[i].gsx$lastname.$t;
+					let phone = rows[i].gsx$phone.$t
+					let email = rows[i].gsx$email.$t
+					clone.querySelector("h2").innerHTML = name;
+					clone.querySelector(".phone").innerHTML = phone;
+					clone.querySelector("a").innerHTML = email;
+					clone.querySelector("a").setAttribute("href", "mailto:"+email);
+					section.appendChild(clone);
+				}
+			}
+
+			loadJSON(path);
+		</script>
+	</body>
+</html>
