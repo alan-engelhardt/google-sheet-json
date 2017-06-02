@@ -11,6 +11,7 @@
 		<section></section>
 		<template>
 			<article>
+				<img>
 				<h2>NAME</h2>
 				<p>E-mail: <a>EMAIL</a></p>
 				<p>Phone: <span class="phone">PHONE</span></p>
@@ -33,10 +34,12 @@
 				let name = data.gsx$firstname.$t + " " + data.gsx$lastname.$t;
 				let phone = data.gsx$phone.$t
 				let email = data.gsx$email.$t
+				let img = data.gsx$image.$t
 				clone.querySelector("h2").innerHTML = name;
 				clone.querySelector(".phone").innerHTML = phone;
 				clone.querySelector("a").innerHTML = email;
 				clone.querySelector("a").setAttribute("href", "mailto:"+email);
+				clone.querySelector("img").setAttribute("src", "../images/"+img+".jpg");
 				section.appendChild(clone);
 			}
 
